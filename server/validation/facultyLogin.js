@@ -8,7 +8,7 @@ const validateFacultyLoginInput = (data) => {
     : "";
   data.password = !isEmpty(data.password) ? data.password : "";
 
-  if (!Validator.isLength(data.registrationNumber, { min: 12, max: 12 })) {
+  if (!Validator.isLength(data.registrationNumber, { min: 2, max: 120 })) {
     errors.registrationNumber =
       "Registration number must be 12 characters long";
   }

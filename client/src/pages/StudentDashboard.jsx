@@ -88,7 +88,7 @@ const StudentDashboard = () => {
     <Container>
       <Header>
           <h1>Student Profile</h1>
-          <img src={student.student.student.avatar.url} />
+          {/* <img src={student.student.student.avatar.url} /> */}
           <h3>{student.student.student.name}</h3>
           <h3>{student.student.student.registrationNumber}</h3>
           <Link to="/student/update">Update Profile</Link>

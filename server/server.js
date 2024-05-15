@@ -8,7 +8,7 @@ const cors = require("cors");
 const dotenv = require("dotenv");
 dotenv.config();
 
-//Setup Middlewares
+// Setup Middlewares
 const app = express();
 let server = http.createServer(app);
 let io = socket(server);
@@ -19,7 +19,7 @@ app.use(cors());
 app.use(passport.initialize());
 require("./config/passport")(passport);
 
-//Socket IO setup
+// Socket IO setup
 io.on("connection", (socket) => {
   socket.on("join room", ({ room1, room2 }) => {
     socket.join(room1);
@@ -38,23 +38,23 @@ io.on("connection", (socket) => {
 
 let _response = {};
 
-//Routes
-const adminRoutes = require("./routes/adminRoutes");
+// Routes
+// const adminRoutes = require("./routes/adminRoutes"); // Commented out
 const facultyRoutes = require("./routes/facultyRoutes");
 const studentRoutes = require("./routes/studentRoutes");
 
-app.use("/api/admin", adminRoutes);
+// app.use("/api/admin", adminRoutes); // Commented out
 app.use("/api/faculty", facultyRoutes);
 app.use("/api/student", studentRoutes);
 
-//404 Route Error
+// 404 Route Error
 app.use((req, res, next) => {
   const error = new Error("Invalid Route");
   error.status = 404;
   next(error);
 });
 
-//Error Handler
+// Error Handler
 app.use((error, req, res, next) => {
   res.status(error.status || 500);
   res.json({
@@ -66,7 +66,7 @@ app.use((error, req, res, next) => {
 
 const PORT = process.env.PORT;
 
-//Connect to MongoDB
+// Connect to MongoDB
 mongoose
   .connect(process.env.MONGO_URI)
   .then((data) => {
@@ -81,7 +81,7 @@ app.use("/", (req, res) => {
   res.status(200).json(_response);
 });
 
-//Start Server
+// Start Server
 server.listen(PORT, () => {
   _response.server = "Healthy";
   console.log(`Server running on port: ${PORT}`);

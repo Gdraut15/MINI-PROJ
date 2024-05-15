@@ -51,7 +51,6 @@ const studentSchema = new Schema({
   batch: {
     type: String,
   },
-
   studentMobileNumber: {
     type: Number,
   },
@@ -65,5 +64,3 @@ const studentSchema = new Schema({
 
 module.exports =
   mongoose.models.student || mongoose.model("student", studentSchema);
-
-  // dancingGranny12345

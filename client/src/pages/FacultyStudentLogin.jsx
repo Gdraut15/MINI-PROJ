@@ -185,8 +185,8 @@ const FacultyStudentLogin = () => {
     <Container>
         <Wrapper>
             <Left>
-                <Logo>Smart ERP</Logo>
-                <Desc>Track your academics and stay connected with your peers</Desc>
+                <Logo>Student Registration Portal</Logo>
+                <Desc>Tailored specifically for the students of Veermata Jijabai Technological Institute</Desc>
             </Left>
             <Right>
                 {

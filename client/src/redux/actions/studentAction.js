@@ -91,7 +91,7 @@ export const studentLogin = (studentCredentials) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.post(
-        "/api/student/login",
+        "http://localhost:8000/api/student/login",
         studentCredentials
       );
       const { token } = data;

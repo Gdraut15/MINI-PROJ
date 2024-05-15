@@ -114,21 +114,21 @@ const StudentUpdateProfile = () => {
     const [mobile,setMobile] = useState(student.student.student.studentMobileNumber);
     const [fatherName,setFatherName] = useState(student.student.student.fatherName);
     const [fatherMobile,setFatherMobile] = useState(student.student.student.fatherMobileNumber);
-    const [avatar,setAvatar] = useState(student.student.student.avatar.url);
-    const [avatarPreview,setAvatarPreview] = useState(student.student.student.avatar.url);
+    // const [avatar,setAvatar] = useState(student.student.student.avatar.url);
+    // const [avatarPreview,setAvatarPreview] = useState(student.student.student.avatar.url);
 
-    const imageHandler = (e) => {
-       const reader = new FileReader();
+    // const imageHandler = (e) => {
+    //    const reader = new FileReader();
 
-       reader.onload = () => {
-        if(reader.readyState === 2)
-        {
-            setAvatarPreview(reader.result);
-            setAvatar(reader.result);
-        }
-       }
-       reader.readAsDataURL(e.target.files[0]);
-    }
+    //    reader.onload = () => {
+    //     if(reader.readyState === 2)
+    //     {
+    //         setAvatarPreview(reader.result);
+    //         setAvatar(reader.result);
+    //     }
+    //    }
+    //    reader.readAsDataURL(e.target.files[0]);
+    // }
 
     const fileHandler = async(e) => {
         e.preventDefault();
@@ -138,7 +138,7 @@ const StudentUpdateProfile = () => {
         myForm.append("fatherName",fatherName);
         myForm.append("fatherMobileNumber",fatherMobile);
         myForm.append("registrationNumber",student.student.student.registrationNumber);
-        myForm.append("avatar",avatar);
+        // myForm.append("avatar",avatar);
        // console.log(myForm);
         dispatch(studentUpdate(myForm));
         alert.success("Please login again to view updates");
@@ -154,7 +154,8 @@ const StudentUpdateProfile = () => {
                 <ProfileHeader>
                     Update Profile
                 </ProfileHeader>
-                <ProfileForm encType='multiform/form-data' onSubmit={fileHandler}>
+                {/* onSubmit={fileHandler} */}
+                <ProfileForm encType='multiform/form-data'>
                     <ProfileEmail>
                     <MailOutline/>
                         <ProfileInput type="text" placeholder="Email" required name="email" value={email} onChange={(e) => setEmail(e.target.value)} />
@@ -172,8 +173,8 @@ const StudentUpdateProfile = () => {
                         <ProfileInput type="text" placeholder="Father Mobile" required name="fatherMobileNumber" value={fatherMobile}  onChange={(e) => setFatherMobile(e.target.value)}/>
                     </ProfilePhone>
                     <ProfileImage>
-                    <img src={avatarPreview} alt="Avatar Preview" />
-                    <input type="file" name="avatar" accept="image/*" onChange={imageHandler}/> 
+                    {/* <img src={avatarPreview} alt="Avatar Preview" />
+                    <input type="file" name="avatar" accept="image/*" onChange={imageHandler}/>  */}
                     </ProfileImage>
                     <ProfileButton type="submit">
                         Update Profile

@@ -30,5 +30,4 @@ const Loader = () => {
         </Wrapper>
     )
 }
-
 export default Loader;
