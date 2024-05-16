@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useAlert } from 'react-alert';
 
-import { Person, Dashboard, Ballot, ExitToApp, Group, Feedback } from '@material-ui/icons'; 
+import { Person, Dashboard, Ballot, ExitToApp, Group, Feedback, Message } from '@material-ui/icons'; // Added Message icon
 import styled from 'styled-components';
 
 import { studentLogout, newerChats, previousChats } from '../redux/actions/studentAction';
@@ -126,6 +126,10 @@ const StudentNavbar = () => {
     navigate('/student/studentFeedback');
   };
 
+  const goToBlog = () => {
+    navigate('/student/blog'); 
+  };
+
   return (
     <Container>
       <Wrapper>
@@ -151,6 +155,9 @@ const StudentNavbar = () => {
             <Feedback onClick={goToStudentFeedback} style={{ color: "#0077b6" }} /> 
           </MenuItem>
           <MenuItem>
+            <Message onClick={goToBlog} style={{ color: "#0077b6" }} /> {/* Added the Message icon */}
+          </MenuItem>
+          <MenuItem>
             <ExitToApp onClick={logoutHandler} style={{ color: "#0077b6" }} />
           </MenuItem>
         </Right>
@@ -160,4 +167,3 @@ const StudentNavbar = () => {
 };
 
 export default StudentNavbar;
-

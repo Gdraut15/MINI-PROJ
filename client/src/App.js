@@ -27,7 +27,10 @@ import {
   StudentFeedback, 
   StudentDetails, 
   FacultyUpdateProfile, 
-  ForgotPassword
+  ForgotPassword,
+  Blog,
+  BlogDetails,
+  Create
 } from "./pages";
 
 // Handle JWT Token
@@ -74,6 +77,9 @@ function App() {
           <Route exact path="/faculty/marks" element={<FacultyUploadMarks />} />
           <Route exact path="/faculty/attendance" element={<FacultyAttendance />} />
           <Route exact path="/forgotPassword/:user" element={<ForgotPassword />} />
+          <Route exact path="/student/blog" element={<Blog />} /> 
+          <Route exact path="/create" element={<Create />} /> 
+          <Route exact path="/blogs/:id" element={<BlogDetails />} />
         </Routes>
       </Router>
     </>
