@@ -48,30 +48,24 @@ const StudentAttendance = () => {
         {field:"attendance",headerName:"Attendance",flex:0.4},
     ]
 
-    /*
-    const subjects = [
-        {no:1,code:12345,name:"Data Structures",max:40,present:32,absent:8,total:40,attendance:80},
-        {no:2,code:12345,name:"Algorithms",max:40,present:32,absent:8,total:40,attendance:80},
-        {no:3,code:12345,name:"Operating Systems",max:40,present:32,absent:8,total:40,attendance:80},
-        {no:4,code:12345,name:"Database Management",max:40,present:32,absent:8,total:40,attendance:80},
-        {no:5,code:12345,name:"Machine Learning",max:18,present:12,absent:6,total:20,attendance:66.67},
-    ]
-    */
+    // Dummy Data
+    const dummyData = [
+        { no: 1, code: 12345, name: "Data Structures", max: 40, absent: 8, total: 40, attendance: 80 },
+        { no: 2, code: 12345, name: "Algorithms", max: 40, absent: 8, total: 40, attendance: 80 },
+        { no: 3, code: 12345, name: "Operating Systems", max: 40, absent: 8, total: 40, attendance: 80 },
+        { no: 4, code: 12345, name: "Database Management", max: 40, absent: 8, total: 40, attendance: 80 },
+        { no: 5, code: 12345, name: "Machine Learning", max: 18, absent: 6, total: 20, attendance: 66.67 },
+    ];
 
-    const rows = [];
-    student?.attendence?.forEach((item,index) => {
-        rows.push({
-            id:index+1,
-            code:item.subjectCode,
-            name:item.subjectName,
-            max:item.maxHours,
-            absent:item.absentHours,
-            total:item.totalLectures,
-            attendance:`${item.attendance}%`,
-        })
-    })
-
-    //console.log(rows);
+    const rows = dummyData.map((item, index) => ({
+        id: index + 1,
+        code: item.code,
+        name: item.name,
+        max: item.max,
+        absent: item.absent,
+        total: item.total,
+        attendance: `${item.attendance}%`,
+    }));
 
     return(
         <>

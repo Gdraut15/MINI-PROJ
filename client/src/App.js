@@ -23,15 +23,11 @@ import {
   StudentSubjectList, 
   StudentPerformance, 
   StudentAttendance, 
-  StudentUpdateProfile, 
-  StudentUpdatePassword, 
+  StudentUpdateProfile,  
   StudentFeedback, 
   StudentDetails, 
   FacultyUpdateProfile, 
-  FacultyUpdatePassword, 
-  ForgotPassword, 
-  Chat, 
-  StudentChats 
+  ForgotPassword
 } from "./pages";
 
 // Handle JWT Token
@@ -72,16 +68,12 @@ function App() {
           <Route exact path="/student/performance" element={<StudentPerformance />} />
           <Route exact path="/student/attendance" element={<StudentAttendance />} />
           <Route exact path="/student/studentFeedback" element={<StudentFeedback />} /> 
-          <Route exact path="/student/chatList" element={<StudentChats />} />
           <Route exact path="/profile/:registrationNumber" element={<StudentDetails />} />
           <Route exact path="/student/update" element={<StudentUpdateProfile />} />
           <Route exact path="/faculty/update" element={<FacultyUpdateProfile />} />
           <Route exact path="/faculty/marks" element={<FacultyUploadMarks />} />
           <Route exact path="/faculty/attendance" element={<FacultyAttendance />} />
-          <Route exact path="/student/updatePassword" element={<StudentUpdatePassword />} />
-          <Route exact path="/faculty/updatePassword" element={<FacultyUpdatePassword />} />
           <Route exact path="/forgotPassword/:user" element={<ForgotPassword />} />
-          <Route exact path="/chat/:room" element={<Chat />} />
         </Routes>
       </Router>
     </>

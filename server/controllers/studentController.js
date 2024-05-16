@@ -9,7 +9,6 @@ const sendEmail = require("../utils/nodemailer");
 const Student = require("../models/Student");
 const Subject = require("../models/Subject");
 const Attendance = require("../models/Attendance");
-const Message = require("../models/Message");
 const Mark = require("../models/Marks");
 
 //File Handler
@@ -21,7 +20,6 @@ const validateStudentLoginInput = require("../validation/studentLogin");
 const validateStudentUpdatePassword = require("../validation/studentUpdatePassword");
 const validateForgotPassword = require("../validation/forgotPassword");
 const validateOTP = require("../validation/otpValidation");
-const { markAttendance } = require("./facultyController");
 
 exports.studentLogin = async (req, res, next) => {
   const { errors, isValid } = validateStudentLoginInput(req.body);
@@ -54,7 +52,6 @@ exports.studentLogin = async (req, res, next) => {
 
 exports.checkAttendance = async (req, res, next) => {
   try {
-    // console.log(req.user);
     const studentId = req.user._id;
     const attendance = await Attendance.find({ student: studentId }).populate(
       "subject"
@@ -229,65 +226,6 @@ exports.postOTP = async (req, res, next) => {
   }
 };
 
-exports.postPrivateChat = async (req, res, next) => {
-  try {
-    const {
-      senderName,
-      senderId,
-      roomId,
-      receiverRegistrationNumber,
-      senderRegistrationNumber,
-      message,
-    } = req.body;
-
-    const receiverStudent = await Student.findOne({
-      registrationNumber: receiverRegistrationNumber,
-    });
-
-    //console.log(receiverStudent);
-
-    const newMessage = await new Message({
-      senderName,
-      senderId,
-      roomId,
-      message,
-      senderRegistrationNumber,
-      receiverRegistrationNumber,
-      receiverName: receiverStudent.name,
-      receiverId: receiverStudent._id,
-      createdAt: new Date(),
-    });
-
-    await newMessage.save();
-    res.status(200).json("Message sent successfully");
-  } catch (err) {
-    console.log("Error is sending private chat", err.message);
-  }
-};
-
-exports.getPrivateChat = async (req, res, next) => {
-  try {
-    const { roomId } = req.params;
-    const swap = (input, a, b) => {
-      let temp = input[a];
-      input[a] = input[b];
-      input[b] = temp;
-    };
-
-    const allMessage = await Message.find({ roomId });
-    let tempArr = roomId.split(".");
-    swap(tempArr, 0, 1);
-    let secondRoomId = tempArr[0] + "." + tempArr[1];
-    const allMessage2 = await Message.find({ roomId: secondRoomId });
-
-    var conversation = allMessage.concat(allMessage2);
-    conversation.sort();
-    res.status(200).json({ result: conversation });
-  } catch (err) {
-    console.log("Error in get private chat server side", err.message);
-  }
-};
-
 exports.getAllSubjects = async (req, res, next) => {
   try {
     const { department, year } = req.user;
@@ -330,82 +268,6 @@ exports.getAllMarks = async (req, res, next) => {
     });
   } catch (err) {
     return res.status(400).json({ "Error in getting marks": err.message });
-  }
-};
-
-exports.differentChats = async (req, res, next) => {
-  try {
-    const { receiverName } = req.params;
-    const newChatsTemp = await Message.find({ senderName: receiverName });
-
-    var filteredObjTemp = newChatsTemp.map((obj) => {
-      let filteredObj = {
-        senderName: obj.senderName,
-        receiverName: obj.receiverName,
-        senderRegistrationNumber: obj.senderRegistrationNumber,
-        receiverRegistrationNumber: obj.receiverRegistrationNumber,
-        receiverId: obj.receiverId,
-      };
-
-      return filteredObj;
-    });
-
-    let filteredListTemp = [
-      ...new Set(filteredObjTemp.map(JSON.stringify)),
-    ].map(JSON.parse);
-    const newChats = await Message.find({ receiverName });
-
-    var filteredObj = newChats.map((obj) => {
-      let filteredObj = {
-        senderName: obj.senderName,
-        receiverName: obj.receiverName,
-        senderRegistrationNumber: obj.senderRegistrationNumber,
-        receiverRegistrationNumber: obj.receiverRegistrationNumber,
-        receiverId: obj.receiverId,
-      };
-      return filteredObj;
-    });
-
-    let filteredListPro = [...new Set(filteredObj.map(JSON.stringify))].map(
-      JSON.parse
-    );
-    for (var i = 0; i < filteredListPro.length; i++) {
-      for (var j = 0; j < filteredListTemp.length; j++) {
-        if (
-          filteredListPro[i].senderName === filteredListTemp[j].receiverName
-        ) {
-          filteredListPro.splice(i, 1);
-        }
-      }
-    }
-    res.status(200).json({ result: filteredListPro });
-  } catch (err) {
-    res.status(500).json(err);
-  }
-};
-
-exports.previousChats = async (req, res, next) => {
-  try {
-    const { senderName } = req.params;
-    const newChats = await Message.find({ senderName });
-
-    var filteredObj = newChats.map((obj) => {
-      let filteredObj = {
-        senderName: obj.senderName,
-        receiverName: obj.receiverName,
-        senderRegistrationNumber: obj.senderRegistrationNumber,
-        receiverRegistrationNumber: obj.receiverRegistrationNumber,
-        receiverId: obj.receiverId,
-      };
-      return filteredObj;
-    });
-    var filteredList = [...new Set(filteredObj.map(JSON.stringify))].map(
-      JSON.parse
-    );
-    //console.log("filterdList",filteredList)
-    res.status(200).json({ result: filteredList });
-  } catch (err) {
-    res.status(500).json(err);
   }
 };
 

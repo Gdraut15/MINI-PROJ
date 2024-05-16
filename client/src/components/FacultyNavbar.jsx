@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector} from 'react-redux'
 import {useAlert} from 'react-alert'
 
-import {Person,Dashboard,Ballot,VpnKey,ExitToApp,Group} from '@material-ui/icons'
+import {Person,Dashboard,Ballot,ExitToApp,Group} from '@material-ui/icons'
 import styled from 'styled-components'
 import {facultyLogout} from '../redux/actions/facultyAction'
 
@@ -75,10 +75,6 @@ const FacultyNavbar = () => {
       navigate('/faculty/update')
     }
 
-    const updatePassword = () => {
-      navigate('/faculty/updatePassword')
-    }
-
     const marksList = () => {
       navigate('/faculty/marks')
     }
@@ -106,9 +102,6 @@ const FacultyNavbar = () => {
                      </MenuItem>
                      <MenuItem>
                        <Dashboard onClick={home} style={{color:"#0077b6"}}/>
-                     </MenuItem>
-                     <MenuItem>
-                       <VpnKey onClick={updatePassword} style={{color:"#0077b6"}}/>
                      </MenuItem>
                      <MenuItem>
                        <Group onClick={attendance} style={{color:"#0077b6"}}/>

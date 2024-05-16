@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import StudentNavbar from '../../components/StudentNavbar';
 
 const Container = styled.div`
-    max-width: 600px;
-    margin: 20px auto;
+    max-width: 6000000px;
+    margin-top:Opx;
     background-color: #ffffff; /* White box */
-    padding: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     font-family: Arial, sans-serif;
     border-radius: 10px;
+    overflow: hidden; /* Ensure content doesn't overflow */
 `;
 
 const Title = styled.h1`
@@ -17,6 +18,7 @@ const Title = styled.h1`
 `;
 
 const FormGroup = styled.div`
+    text-align:center;
     margin-bottom: 15px;
 `;
 
@@ -27,7 +29,7 @@ const Label = styled.label`
 `;
 
 const Input = styled.input`
-    width: 100%;
+    width: 40%;
     padding: 8px;
     box-sizing: border-box;
     border: 1px solid #007bff; /* Bootstrap primary blue */
@@ -35,7 +37,7 @@ const Input = styled.input`
 `;
 
 const Select = styled.select`
-    width: 100%;
+    width: 40%;
     padding: 8px;
     box-sizing: border-box;
     border: 1px solid #007bff; /* Bootstrap primary blue */
@@ -43,7 +45,7 @@ const Select = styled.select`
 `;
 
 const Textarea = styled.textarea`
-    width: 100%;
+    width: 40%;
     padding: 8px;
     box-sizing: border-box;
     border: 1px solid #007bff; /* Bootstrap primary blue */
@@ -61,6 +63,10 @@ const Button = styled.button`
     &:hover {
         background-color: #0056b3; /* Darker blue */
     }
+`;
+
+const Form = styled.form`
+    margin-top: 20px; /* Add margin to the top */
 `;
 
 const StudentFeedback = () => {
@@ -99,8 +105,9 @@ const StudentFeedback = () => {
 
     return (
         <Container>
+            <StudentNavbar/>
             <Title>Teacher Feedback Form</Title>
-            <form onSubmit={handleSubmit}>
+            <Form onSubmit={handleSubmit}>
                 <FormGroup>
                     <Label htmlFor="studentName">Student Name:</Label>
                     <Input
@@ -165,7 +172,7 @@ const StudentFeedback = () => {
                 <FormGroup>
                     <Button type="submit">Submit</Button>
                 </FormGroup>
-            </form>
+            </Form>
         </Container>
     );
 };

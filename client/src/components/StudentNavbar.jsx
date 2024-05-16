@@ -3,11 +3,11 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useAlert } from 'react-alert';
 
-import { Person, Dashboard, Ballot, VpnKey, ExitToApp, Group, Chat, Feedback } from '@material-ui/icons'; 
+import { Person, Dashboard, Ballot, ExitToApp, Group, Feedback } from '@material-ui/icons'; 
 import styled from 'styled-components';
 
 import { studentLogout, newerChats, previousChats } from '../redux/actions/studentAction';
-import StudentFeedback from '../pages/Student/StudentFeedback';
+import StudentFeedback from '../pages/Student/StudentFeedback'; // Renamed the import to avoid naming conflict
 
 const Container = styled.div`
   width: 100vw;
@@ -109,9 +109,6 @@ const StudentNavbar = () => {
     navigate('/student/update');
   };
 
-  const updatePassword = () => {
-    navigate('/student/updatePassword');
-  };
 
   const subjectList = () => {
     navigate('/student/subjects');
@@ -125,11 +122,7 @@ const StudentNavbar = () => {
     navigate('/student/attendance');
   };
 
-  const chatList = () => {
-    navigate('/student/chatList');
-  };
-
-  const studentFeedback = () => { 
+  const goToStudentFeedback = () => { // Renamed function to avoid naming conflict
     navigate('/student/studentFeedback');
   };
 
@@ -149,20 +142,13 @@ const StudentNavbar = () => {
             <Dashboard onClick={marksList} style={{ color: "#0077b6" }} />
           </MenuItem>
           <MenuItem>
-            <VpnKey onClick={updatePassword} style={{ color: "#0077b6" }} />
-          </MenuItem>
-          <MenuItem>
             <Group onClick={attendance} style={{ color: "#0077b6" }} />
           </MenuItem>
           <MenuItem>
             <Ballot onClick={subjectList} style={{ color: "#0077b6" }} />
           </MenuItem>
           <MenuItem>
-            <Chat onClick={chatList} style={{ color: "#0077b6" }} />
-            <IconBadge>{student.newerChats.length}</IconBadge>
-          </MenuItem>
-          <MenuItem>
-            <Feedback onClick={StudentFeedback} style={{ color: "#0077b6" }} /> 
+            <Feedback onClick={goToStudentFeedback} style={{ color: "#0077b6" }} /> 
           </MenuItem>
           <MenuItem>
             <ExitToApp onClick={logoutHandler} style={{ color: "#0077b6" }} />
@@ -174,3 +160,4 @@ const StudentNavbar = () => {
 };
 
 export default StudentNavbar;
+
