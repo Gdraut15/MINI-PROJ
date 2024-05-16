@@ -17,7 +17,6 @@ const cloudinary = require("../utils/cloudinary");
 
 //Validation
 const validateStudentLoginInput = require("../validation/studentLogin");
-const validateStudentUpdatePassword = require("../validation/studentUpdatePassword");
 const validateForgotPassword = require("../validation/forgotPassword");
 const validateOTP = require("../validation/otpValidation");
 
@@ -122,38 +121,6 @@ exports.getStudentByRegNum = async (req, res, next) => {
   }
 };
 
-exports.updatePassword = async (req, res, next) => {
-  try {
-    const { errors, isValid } = validateStudentUpdatePassword(req.body);
-    if (!isValid) {
-      return res.status(400).json(errors);
-    }
-
-    const { registrationNumber, oldPassword, newPassword, confirmNewPassword } =
-      req.body;
-    if (newPassword !== confirmNewPassword) {
-      errors.confirmNewpassword = "Password Mismatch";
-      return res.status(400).json(errors);
-    }
-
-    const student = await Student.findOne({ registrationNumber });
-    const validPassword = await bcrypt.compare(oldPassword, student.password);
-
-    if (!validPassword) {
-      errors.oldPassword = "Wrong Password. Try again";
-      return res.status(404).json(errors);
-    }
-
-    let hashedPassword;
-    hashedPassword = await bcrypt.hash(newPassword, 10);
-    student.password = hashedPassword;
-    await student.save();
-    return res.status(200).json({ message: "Password updated succesfully" });
-  } catch (err) {
-    console.log("Error updating password", err.message);
-  }
-};
-
 exports.forgotPassword = async (req, res, next) => {
   try {
     const { errors, isValid } = validateForgotPassword(req.body);
@@ -187,7 +154,7 @@ exports.forgotPassword = async (req, res, next) => {
 
     const helper = async () => {
       student.otp = "";
-      await Student.save();
+      await student.save();
     };
 
     setTimeout(function () {
@@ -283,6 +250,10 @@ exports.updateProfile = async (req, res, next) => {
 
     const student = await Student.findOne({ registrationNumber });
 
+    if (!student) {
+      return res.status(404).json({ message: "Student not found" });
+    }
+
     const { _id } = student;
 
     const updatedData = {
@@ -292,19 +263,6 @@ exports.updateProfile = async (req, res, next) => {
       fatherMobileNumber,
     };
 
-    if (req.body.avatar !== "") {
-      const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
-        folder: "erp",
-        width: 150,
-        crop: "scale",
-      });
-
-      updatedData.avatar = {
-        public_id: myCloud.public_id,
-        url: myCloud.secure_url,
-      };
-    }
-
     const updatedStudent = await Student.findByIdAndUpdate(_id, updatedData, {
       new: true,
       runValidators: true,
@@ -313,8 +271,10 @@ exports.updateProfile = async (req, res, next) => {
 
     res.status(200).json({
       success: true,
+      updatedStudent,
     });
   } catch (err) {
     console.log("Error in updating Profile", err.message);
+    res.status(500).json({ message: "Internal Server Error" });
   }
 };

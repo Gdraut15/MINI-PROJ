@@ -10,7 +10,7 @@ import {
   facultyLogout 
 } from "./redux/actions/facultyAction";
 import { 
-  setStudentUser, 
+  setStudent, // Changed setStudentUser to setStudent
   studentLogout 
 } from "./redux/actions/studentAction";
 
@@ -48,7 +48,7 @@ if (window.localStorage.facultyToken) {
 } else if (window.localStorage.studentToken) {
   authToken(localStorage.studentToken);
   const decoded = jwt_decode(localStorage.studentToken);
-  store.dispatch(setStudentUser(decoded));
+  store.dispatch(setStudent(decoded));
 
   // Check if token expired
   const currentTime = Date.now() / 1000;

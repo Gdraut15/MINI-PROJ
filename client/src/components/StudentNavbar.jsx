@@ -3,11 +3,11 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useAlert } from 'react-alert';
 
-import { Person, Dashboard, Ballot, ExitToApp, Group, Feedback, Message } from '@material-ui/icons'; // Added Message icon
+import { Person, Dashboard, Ballot, ExitToApp, Group, Feedback, Message } from '@material-ui/icons';
 import styled from 'styled-components';
 
-import { studentLogout, newerChats, previousChats } from '../redux/actions/studentAction';
-import StudentFeedback from '../pages/Student/StudentFeedback'; // Renamed the import to avoid naming conflict
+import { studentLogout } from '../redux/actions/studentAction';
+import StudentFeedback from '../pages/Student/StudentFeedback';
 
 const Container = styled.div`
   width: 100vw;
@@ -86,11 +86,6 @@ const StudentNavbar = () => {
     }
   }, [student.student.student.name]);
 
-  useEffect(() => {
-    dispatch(newerChats(student.student.student.name));
-    dispatch(previousChats(student.student.student.name));
-  }, [student.newerChats.length]);
-
   const logoutHandler = () => {
     dispatch(studentLogout());
     navigate('/');
@@ -109,7 +104,6 @@ const StudentNavbar = () => {
     navigate('/student/update');
   };
 
-
   const subjectList = () => {
     navigate('/student/subjects');
   };
@@ -122,7 +116,7 @@ const StudentNavbar = () => {
     navigate('/student/attendance');
   };
 
-  const goToStudentFeedback = () => { // Renamed function to avoid naming conflict
+  const goToStudentFeedback = () => {
     navigate('/student/studentFeedback');
   };
 
@@ -155,7 +149,7 @@ const StudentNavbar = () => {
             <Feedback onClick={goToStudentFeedback} style={{ color: "#0077b6" }} /> 
           </MenuItem>
           <MenuItem>
-            <Message onClick={goToBlog} style={{ color: "#0077b6" }} /> {/* Added the Message icon */}
+            <Message onClick={goToBlog} style={{ color: "#0077b6" }} />
           </MenuItem>
           <MenuItem>
             <ExitToApp onClick={logoutHandler} style={{ color: "#0077b6" }} />
